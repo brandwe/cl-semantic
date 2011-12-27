@@ -1,0 +1,37 @@
+Research Objective
+
+Seeks to create a collection of macros for extracting and generating relationships between information using ontologies for the Semantic Web, which will leverage DSpace, use Protege as the relationship mapper for OWL generation and be tested using MIT's Piggy Bank extraction project. This is research using Lisp to develop macros for generating and processing semantic data and programmatically manipulating and generating OWL, similar (or dead on) Racer System's RacerMaster, which is RacerPro as an object code library. It is also hoped that this project will apply speed paths based off of research from Eugene Agichtein & Silviu Cucerzan regarding predicting performance of relational extraction tasks (RE). This project seeks to re-create some of the work done with RacerPro, however the focus of this project will be on developing a language model for Reasoning Systems to allow for an open-source and vibrant community of developers to continue the work of improving reasoning systems to drive the Semantic Web.
+
+The exact idea for this project is presented in a paper: ŒÈŒÌBuilding Ontological Data From Lists For Semantic ProcessingŒÈŒÌ, which is being readied for Conference on Information and Knowledge Management (CIKM 2006). It relies heavily on s-xml, cl-prevelance and cells. 
+
+This will be of general interest since it will allow anyone using RDF/OWL to "annotate" their websites to use these macros to parse and generate their ontological relationships faster. Parsing and creating these relationships will be even more advantageous given Lisp's ability to manage large amounts of similar relationship atoms together in a structure that can persisted on the back end without any framework code. This projects seeks to try to tackle this problem from the functional perspective and build small light-weight parsing algorithms that can build on top of each other to establish relationships instead of the brute-force parsing now done in a top-down fashion using C++, C# and Java.
+
+It Will Be Free Forever
+
+Also, it must always remain open source in license and deed as it seems a lot of the tools out there are locked down (binaries are free, code itself is not). This is understandable since the algorithms used for reasoning systems, if it works well, will make someone a lot of money some day. So what? The only way the idea of a relational system can be perfected is if everyone is on the same page and applying their expertise. 
+
+MOST IMPORTANT: KEEP IT SIMPLE!
+
+The language model we will create will hopefully generate OWL/RDF, SWRL and provide a way to manage and find relationships through consuming these resources in a reasoning system, but this must be within one engine and simple to use from the developer perspective. Our primary goal is to fold in and simplify as well as innovate. 
+
+Join Us!
+
+We'd love to get other people interested in the processing aspect of semantic relationships involved in our project! Please send an email to Brandon Werner (using this public key) with a brief message about why you want to join the project and we'll review it and add you. 
+
+How to Install What You Need To Get Working (It's Not That Hard, Really)
+
+To Hang Out With Us You Will Need
+
+1) Download Protege 3.1.1 (build 216) from Stanford University (link) 
+2) Download the OWL-QL toolkit (link) 
+3) Read a little bit about SWRL. 
+4) Download a Common Lisp distribution (Allegro or SBCL are talked about on this page)
+
+You will also need to download the following Lisp packages:
+
+1) Download Wilbur Semantic Web Toolkit for CLOS (link) 
+2) Download Cells 2.0, A dataflow extension to CLOS (link)
+ 3) Download S-XML, a simple XML parser implemented in Common Lisp (link)
+  4) Download LTK, a Common Lisp binding for the Tk graphics toolkit (link
+
+  For install information please visit our install page. 
