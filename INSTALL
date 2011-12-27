@@ -1,0 +1,327 @@
+
+cl-semantic
+
+A collection of RDF/OWL extraction and relationship parsing macros
+ 
+How to Install What You Need To Get Working (It's Not That Hard, Really) 
+
+To Hang Out With Us You Will Need
+
+1) Download Protege 3.1.1 (build 216) from Stanford University (link) 
+2) Download the OWL-QL toolkit (link) 
+3) Read a little bit about SWRL. 
+4) Download a Common Lisp distribution (Allegro or SBCL are talked about on this page)
+ 5) Follow the directions to either setup Allegro or setup SBCL to load the Lisp packages talked about below. 
+5) Obviously, you will also need to check-out cl-semantic. 
+
+You will also need to download the following Lisp packages:
+
+1) Download Wilbur Semantic Web Toolkit for CLOS (link) 
+2) Download Cells 2.0, A dataflow extension to CLOS (link)
+3) Download S-XML, a simple XML parser implemented in Common Lisp (link)
+4) Download LTK, a Common Lisp binding for the Tk graphics toolkit (link)
+
+NOTE: About commercial and crippled binaries: 
+
+No one is impressed with the state of commercial Lisp distributions regarding their desire to cripple their use for evaluation purposes. Both Franz's Allegro and LispWorks limit your heap size during development, which may cause problems if you are running or developing the full application which require large symbol processing functions to run. However, there are many open source Common Lisp implementations that are slower, but will work without restrictions (CLISP, SBCL). However, we still talk about Allegro since many research environments and universities have this product, and they have an extremely good distribution with very few restrictions for evaluation. We do not talk about LispWorks. We believe their restrictions such as closing the IDE after 5 hours of use, not allow loading of init scripts or the use of (require :asdf) in their listener for evaluation versions (which our project makes heavy use of to load various requirements for this project) are amazingly over the top. Our belief is that LispWorks is too restrictive to the Lisp community for development purposes, and we do not support using LispWorks. If you have LispWorks Professional, you may use these installation instructions and modify them to fit your environment. We do discuss using Emacs with SLIME for a good (but by no means perfect) editing and building environment.
+
+NOTE: About using SBCL on Mac OSX (10.x):
+ 
+You can use SBCL on Mac OSX from both the command line and visually, but you probably don't want to at this moment. SBCL throws a SIGSEGV at every stracktrace, and Apple's Crash Reporter looks for these events at the kernel level and opens a Crash Reporter process. When being used visually, SBCL will give you a dialogue box displaying this issue. However, when you run SBCL from the command line or even in the REPL in interactive mode (like you do in Emacs with SLIME), every compile will trigger an Apple Crash Reporter process. This means that after one hour of development you could have 30 or 40 crash reporters launched on your system without any visual indication. Since SBCL developers are aware of the problem, but have not patched the SBCL distribution, we do not recommend or support using SBCL in development on Mac OSX. You can still do it, but keep your Activity Viewer open.
+
+How To Setup Your Environment Using Allegro
+
+Download Franz Allegro Evaluation
+ 
+You may download the evaluation version of Allegro here. If you are a student, we strongly recommend you purchase the $99 student version available here. Regardless of what path you choose, or if you have access to an Allegro version from your work or university, you will want to follow the installation steps available from Franz's website. We believe this documentation is pretty self-explanitory, so we will not re-hash it here. If you have any problems contact the cl-semantic's development group. 
+
+Create a Repository Site
+ 
+The next thing you will want to do is to change in to the directory you have installed Allegro (or any other directory you choose) and create a registry directory. For our purposes, we will call this directory "registry".
+ 
+
+$ cd /my/allegro/install
+ $ mkdir registry
+ 
+Next, go download all of the dependencies we use for cl-semantic (including cl-semantic itself) and put the un-compressed directories in to your registry directory.
+ 
+
+$ tar -xf wilbur2-prerelease-1.tar
+ $ mv wilbur2 /my/allegro/install/registry/ 
+
+After you have moved all your dependencies (including cl-semantic) in to your registry directory, we are going to do something to make our lives easier and create links to the .asd file in each of the distributions to the main registry directory. This allows us to easily load and compile these dependencies without having to set our registry location each time.
+ 
+
+$ cd /my/allegro/install/directory/registry
+ $ ln -s ./wilber/wilbur.asd
+ 
+$ ls -ltr
+ 
+drwxr-xr-x 7 bbjwerne wheel 238 Feb 7 12:33 wilber 
+lrwxr-xr-x 1 bbjwerne wheel 19 Feb 7 12:38 wilbur.asd -> ./wilber/wilbur.asd
+ 
+
+Do this for each dependency listed above. After you have completed this, it's time to tell Allegro about this directory and it will instinctively compile all of this code for you and generate .fasl files for you so that the compiled code will load faster the next time you require it.
+
+IMPORTANT NOTE ABOUT FASL FILES:
+
+Please keep in mind that these compiles are not compatible across Lisp implementations, even though all distributions generate .fasl files and all distributions use Common Lisp as the standard. There are just too many differences between implementations for any cross distribution compatibility. This is important because it means you cannot take this registry and later move it in to your SBCL registry and expect it to run. Your implementation will be smart enough to ask you in the stack trace if you wish to recompile your .lisp files, but you will be prompted for each file in each registry. It is best to keep this directory, before compile, zipped and backed up so you can move this across your lisp distributions.
+ 
+Include Your registry Directory And Add The Dependencies To Your Environment
+ 
+It is best if you do the compilation of the resources for the first time in the REPL interactive environment since you can respond and react to any stack traces that may occur and decide the best course of action. After you have generated your fasl files, loading these requirements in your code again will be faster and re-compile (except cl-semantic which you will be developing) will not be necessary.
+ 
+The first thing you need to do is tell your Lisp environment where you've made your registry. 
+
+
+$ alisp
+ CL-USER> (setf asdf:*central-registry*
+ 
+'(*default-pathname-defaults*
+ 
+#p"/my/allegro/install/registry/"))
+ 
+You will get the response
+ 
+
+(*DEFAULT-PATHNAME-DEFAULTS* #P"/my/allegro/install/registry/")
+ 
+Now, it's show time. The way Allegro wants you to include asdf resources is a little cryptic vs. SBCL, which hooks the asdf in to REQUIRE for you, but after you understand what's it's doing it makes a lot more sense to you.
+ 
+For each dependency, call the package like this: 
+
+
+CL-USER> (asdf:operate 'asdf:load-op 'wilbur)
+ 
+; loading system definition from /usr/local/acl70/registry/wilbur.asd
+ ; into #<The ASDF7682 package>
+ ; Loading /usr/local/acl70/registry/wilbur.asd
+ ; registering #<SYSTEM :WILBUR @ #x57dbd72> as WILBUR
+ ;;; Compiling file /usr/local/acl70/registry/wilber/nox/nox-package.lisp
+ ;;; Writing fasl file
+ ;;; /usr/local/acl70/registry/wilber/nox/nox-package.fasl
+ ;;; Fasl write complete
+ ; Fast loading /usr/local/acl70/registry/wilber/nox/nox-package.fasl
+ ;;; Compiling file
+ ;;; /usr/local/acl70/registry/wilber/nox/core-constants.lisp
+ ;;; Writing fasl file
+ ;;; /usr/local/acl70/registry/wilber/nox/core-constants.fasl
+ ;;; Fasl write complete
+ ; Fast loading /usr/local/acl70/registry/wilber/nox/core-constants.fasl
+ ...
+ 
+CL-USER> (asdf:operate 'asdf:load-op 'cl-semantic)
+ 
+ect. ect. 
+
+How To Load Your Dependencies Again Later
+ 
+Since you're (not cross implementation remember) .fasl files are now created, Allegro will know to load those instead of compiling the .lisp files the next time around. Simply use the same convention as before, but this time the load time will be much faster. You will want to automate all these loads in your SLIME or init file in your home directory. 
+
+
+CL-USER> (asdf:operate 'asdf:load-op 'ltk-mw) 
+; loading system definition from /usr/local/acl70/registry/ltk-mw.asd 
+; into #<The ASDF210 package> 
+; Loading /usr/local/acl70/registry/ltk-mw.asd 
+; registering #<SYSTEM LTK-MW @ #x561788a> as LTK-MW 
+;;; Compiling file /usr/local/acl70/registry/ltk/ltk-mw.lisp 
+;;; Writing fasl file /usr/local/acl70/registry/ltk/ltk-mw.fasl 
+;;; Fasl write complete 
+; Fast loading /usr/local/acl70/registry/ltk/ltk-mw.fasl 
+NIL
+ 
+How To Automatically Setup Your Dependencies and Environment In Your Home Directory
+ 
+It will take exactly one time for you to get bored of loading all your dependencies and setting up your environment every time you launch Allegro. Luckly, both Allegro and SBCL (see below) have the ability to setup your environment from a file in your home directory. To do this, simply create a file in your home directory called ".clinit.cl" and add your requirements and your asdf dependencies in there. An example file is below.
+ 
+
+;;; Set a few top-level variables.
+ (tpl:setq-default top-level:*history* 50)
+ (tpl:setq-default top-level:*print-length* NIL)
+ (tpl:setq-default top-level:*print-level* NIL)
+ (tpl:setq-default top-level:*zoom-print-level* 10)
+ (tpl:setq-default top-level:*zoom-print-length* 10)
+ (tpl:setq-default top-level:*exit-on-eof* NIL)
+ 
+;;; Require calls
+ (require :asdf)
+ 
+;;; Set central registry for asdf (I made it one line for clarity) 
+(setf asdf:*central-registry* '(*default-pathname-defaults* #p"/my/allegro/install/registry/"))
+ 
+;;; Load dependencies
+ (asdf:operate 'asdf:load-op 's-xml)
+ (asdf:operate 'asdf:load-op 'ltk)
+ (asdf:operate 'asdf:load-op 'cells)
+ (asdf:operate 'asdf:load-op 'ltk-remote)
+ (asdf:operate 'asdf:load-op 'ltk-mw)
+ (asdf:operate 'asdf:load-op 'wilbur)
+ (asdf:operate 'asdf:load-op 'cl-semantic)
+ 
+
+Dive In To the Code
+ 
+After you've done all of the loading, you can simply start using cl-semantic (and then start developing it with us) by switching to the cl-semantic package
+ 
+
+(in-package ’cl-semantic :use ’common-lisp) 
+
+Remember to be careful in the package, this is where we are developing the language model so some things just might not work like you expect.
+ 
+That's it! Now poke around and break things! 
+
+(written by Brandon Werner) - Please email with corrections! (back to top) 
+
+How To Setup Your Environment Using SBCL
+ 
+Download SBCL 
+
+You may download SBCL for your particular platform here. Most platforms and architectures are supported. If you have any problems contact the cl-semantic's development group. Installation diirections can be found here. 
+
+Create a Repository Site
+ 
+The next thing you will want to do is to change in to the directory you have installed SBCL in (or any other directory you choose) and create a registry directory. For our purposes, we will call this directory "registry".
+ 
+
+$ cd /my/sbcl/install
+ $ mkdir registry
+ 
+Next, go download all of the dependencies we use for cl-semantic (including cl-semantic itself) and put the un-compressed directories in to your registry directory.
+ 
+
+$ tar -xf wilbur2-prerelease-1.tar
+ $ mv wilbur2 /my/sbcl/install/registry/ 
+
+After you have moved all your dependencies (including cl-semantic) in to your registry directory, we are going to do something to make our lives easier and create links to the .asd file in each of the distributions to the main registry directory. This allows us to easily load and compile these dependencies without having to set our registry location each time.
+ 
+
+$ cd /my/sbcl/install/directory/registry
+ $ ln -s ./wilber/wilbur.asd
+ 
+$ ls -ltr
+ 
+drwxr-xr-x 7 bbjwerne wheel 238 Feb 7 12:33 wilber 
+lrwxr-xr-x 1 bbjwerne wheel 19 Feb 7 12:38 wilbur.asd -> ./wilber/wilbur.asd
+ 
+
+Do this for each dependency listed above. After you have completed this, it's time to tell SBCL about this directory and it will instinctively compile all of this code for you and generate .fasl files for you so that the compiled code will load faster the next time you require it.
+
+IMPORTANT NOTE ABOUT FASL FILES:
+
+Please keep in mind that these compiles are not compatible across Lisp implementations, even though all distributions generate .fasl files and all distributions use Common Lisp as the standard. There are just too many differences between implementations for any cross distribution compatibility. This is important because it means you cannot take this registry and later move it in to your Allegro registry and expect it to run. Your implementation will be smart enough to ask you in the stack trace if you wish to recompile your .lisp files, but you will be prompted for each file in each registry. It is best to keep this directory, before compile, zipped and backed up so you can move this across your lisp distributions.
+ 
+Include Your registry Directory And Add The Dependencies To Your Environment
+ 
+It is best if you do the compilation of the resources for the first time in the REPL interactive environment since you can respond and react to any stack traces that may occur and decide the best course of action. After you have generated your fasl files, loading these requirements in your code again will be faster and re-compile (except cl-semantic which you will be developing) will not be necessary.
+ 
+The first thing you need to do is tell your Lisp environment where you've made your registry. 
+
+
+$ sbcl 
+* (setf asdf:*central-registry*
+ 
+'(*default-pathname-defaults*
+ 
+#p"/my/sbcl/install/registry/"))
+ 
+You will get the response
+ 
+
+(*DEFAULT-PATHNAME-DEFAULTS* #P"/my/sbcl/install/registry/")
+ 
+Now, it's show time. The way SBCL wants you to include asdf resources is a lot easier vs. Allegro, because SBCLhooks the asdf in to REQUIRE for you.
+ 
+For each dependency, call the package like this: 
+
+
+* (require 'wilbur)
+ 
+; compiling file "/usr/local/sbcl/repository/ltk/ltk.lisp" (written 30 JAN 2006 12:39:40 PM):
+ ; compiling (DEFPACKAGE :LTK ...)
+ ; compiling (DEFPACKAGE :LTK-USER ...)
+ ; compiling (IN-PACKAGE :LTK)
+ ; compiling (DEFUN DBG ...)
+ ...
+ 
+* (require 'cl-semantic)
+ 
+ect. ect. 
+
+NOTE: ABOUT SBCL & CELLS 2.0 DEPENDENCY
+ 
+We've had reports of compiling cells 2.0 with SBCL having problems. If this happens, check either the cells site or this site for more information on how to work around it. You can just skip it, depending on what part of the cl-semantic project you are working on.
+ 
+How To Load Your Dependencies Again Later
+ 
+Since you're (not cross implementation remember) .fasl files are now created, Allegro will know to load those instead of compiling the .lisp files the next time around. Simply use the same convention as before, but this time the load time will be much faster. You will want to automate all these loads in your SLIME or init file in your home directory. 
+
+
+* (require 'ltk-mw) 
+
+nil
+ 
+* 
+
+How To Automatically Setup Your Dependencies and Environment In Your Home Directory
+ 
+It will take exactly one time for you to get bored of loading all your dependencies and setting up your environment every time you launch SBCL. Luckly, both Allegro and SBCL (see above) have the ability to setup your environment from a file in your home directory. To do this, simply create a file in your home directory called ".sbclrc" and add your requirements and your asdf dependencies in there. An example file is below.
+ 
+
+;;; Require calls
+ (require :asdf)
+ 
+;;; Set central registry for asdf (I made it one line for clarity) 
+(setf asdf:*central-registry* '(*default-pathname-defaults* #p"/my/sbcl/install/registry/"))
+ 
+;;; Load dependencies
+ (require 's-xml)
+ (require 'ltk)
+ (require 'cells)
+ (require 'ltk-remote)
+ (require 'ltk-mw)
+ (require 'wilbur)
+ (require 'cl-semantic)
+ 
+
+NOTE: How To Make Your SBCL Look Like Allegro's REPL
+ 
+A lot of people love Allegro's REPL environment, and after SBCL 0.9.9.1.1, you can easily make your REPL environment in SBCL look like Allegro. Just add the following lines somewhere in your ".sblrc" file discussed above.
+ 
+
+;;; Make SBCL act like Allegro REPL. It's optional but fun to do for productivity.
+ ;;; If you don't want it, just delete it.
+ 
+(ignore-errors (require 'sb-aclrepl))
+ 
+(when (find-package 'sb-aclrepl)
+ (push :aclrepl cl:*features*))
+ #+aclrepl
+ (progn
+ (setq sb-aclrepl:*max-history* 100)
+ (setf (sb-aclrepl:alias "asdc")
+ #'(lambda (sys) (asdf:operate 'asdf:compile-op sys)))
+ (sb-aclrepl:alias "l" (sys) (asdf:operate 'asdf:load-op sys))
+ (sb-aclrepl:alias "t" (sys) (asdf:operate 'asdf:test-op sys))
+ ;; The 1 below means that two characaters ("up") are required
+ (sb-aclrepl:alias ("up" 1 "Use package") (package) (use-package package))
+ ;; The 0 below means only the first letter ("r") is required,
+ ;; such as ":r base64"
+ (sb-aclrepl:alias ("require" 0 "Require module") (sys) (require sys))
+ (setq cl:*features* (delete :aclrepl cl:*features*)))
+ 
+Dive In To the Code
+ 
+After you've done all of the loading, you can simply start using cl-semantic (and then start developing it with us) by switching to the cl-semantic package
+ 
+
+(in-package ’cl-semantic :use ’common-lisp) 
+
+Remember to be careful in the package, this is where we are developing the language model so some things just might not work like you expect.
+ 
+That's it! Now poke around and break things! 
+
+(written by Brandon Werner) - Please email with corrections! (back to top) 
+
+How To Use Slime/Emacs As Your Editor
+ 
+TODO: Write this

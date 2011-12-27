@@ -1,0 +1,5 @@
+2006-02-13  Brandon Werner  <bbjwerner@brandon-werners-imac-g5.local>
+
+	* asdf-aclproj.lisp: Updated for cl-semantic project
+	* asdf-aclproj.asd: Updated for cl-semantic project
+

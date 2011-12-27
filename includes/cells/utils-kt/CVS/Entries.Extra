@@ -1,0 +1,12 @@
+/.cvsignore////*////
+/core.lisp////*////
+/datetime.lisp////*////
+/debug.lisp////*////
+/defpackage.lisp////*////
+/detritus.lisp////*////
+/flow-control.lisp////*////
+/quad.lisp////*////
+/split-sequence.lisp////*////
+/strings.lisp////*////
+/utils-kt.asd////*////
+/utils-kt.lpr////*////

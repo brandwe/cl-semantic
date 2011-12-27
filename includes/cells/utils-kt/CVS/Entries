@@ -1,0 +1,13 @@
+/.cvsignore/1.1/Wed May 21 10:48:07 2008//
+/core.lisp/1.11/Sun Oct 12 01:21:10 2008//
+/datetime.lisp/1.5/Fri Apr 11 09:19:47 2008//
+/debug.lisp/1.21/Sun Oct 12 01:21:10 2008//
+/defpackage.lisp/1.11/Sun Oct 12 01:21:10 2008//
+/detritus.lisp/1.22/Sun Oct 12 01:21:10 2008//
+/flow-control.lisp/1.15/Sun Oct 12 01:21:10 2008//
+/quad.lisp/1.4/Sat Mar 15 15:18:34 2008//
+/split-sequence.lisp/1.1/Fri Nov 30 21:58:40 2007//
+/strings.lisp/1.8/Sun Oct 12 01:21:10 2008//
+/utils-kt.asd/1.4/Mon Dec  3 12:24:41 2007//
+/utils-kt.lpr/1.25/Sun Oct 12 01:21:10 2008//
+D
