@@ -1,1 +1,105 @@
-My GitHub Page
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+
+  <title>brandwe/cl-semantic @ GitHub</title>
+
+  <style type="text/css">
+    body {
+      margin-top: 1.0em;
+      background-color: #808080;
+      font-family: Helvetica, Arial, FreeSans, san-serif;
+      color: #ffffff;
+    }
+    #container {
+      margin: 0 auto;
+      width: 700px;
+    }
+    h1 { font-size: 3.8em; color: #FFFFFF; margin-bottom: 3px; }
+    h1 .small { font-size: 0.4em; }
+    h1 a { text-decoration: none }
+    h2 { font-size: 1em; color: #FFFFFF; }
+    h3 { color: #FFFFFF; font-size: 1em; }
+    a { color: #b6efc0; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+    .download { float: right; }
+    pre { background: #000; color: #fff; padding: 15px;}
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+    .footer { text-align:center; padding-top:30px; font-style: italic; }
+  </style>
+</head>
+
+<body>
+  <a href="http://github.com/brandwe/cl-semantic"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+
+  <div id="container">
+
+    <div class="download">
+      <a href="http://github.com/brandwe/cl-semantic/zipball/master">
+        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
+      <a href="http://github.com/brandwe/cl-semantic/tarball/master">
+        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+    </div>
+
+    <h1><a href="http://github.com/brandwe/cl-semantic">cl-semantic</a>
+      <span class="small">by <a href="http://github.com/brandwe">brandwe</a></span></h1>
+
+    <div class="description">
+      Seeks to create a collection of macros for extracting and generating relationships between information using  ontologies for the Semantic Web, which will leverage <a href="http://www.dspace.org/">DSpace,</a> use <a href="http://protege.stanford.edu/index.html">Protege</a> as the relationship mapper for OWL generation and be tested using MIT's <a href="http://simile.mit.edu/piggy-bank/index.html">Piggy Bank </a>extraction project.
+    </div>
+
+     <h2>Research Objective</h2>
+ <p class="text">Seeks to create a collection of macros for extracting and generating relationships between information using  ontologies for the Semantic Web, which will leverage <a href="http://www.dspace.org/">DSpace,</a> use <a href="http://protege.stanford.edu/index.html">Protege</a> as the relationship mapper for OWL generation and be tested using MIT's <a href="http://simile.mit.edu/piggy-bank/index.html">Piggy Bank </a>extraction project. This is research using Lisp to develop macros for generating and processing semantic data and programmatically manipulating and generating OWL, similar (or dead on) Racer System's RacerMaster, which is RacerPro as an object code library.  It is also hoped that this project will apply speed paths based off of research from<a href="http://research.microsoft.com/~eugeneag/papers/cikm2005predicting.pdf"> Eugene Agichtein &amp; Silviu Cucerzan</a> regarding predicting performance of relational extraction tasks (RE). This project seeks to re-create some of the work done with RacerPro, however the focus of this project will be on developing a language model for Reasoning Systems to allow for an open-source and vibrant community of developers to continue the work of improving reasoning systems to drive the Semantic Web.</p>
+ <p class="text">The exact idea for this project is presented in a paper: &ldquo;Building Ontological Data From Lists For Semantic Processing&rdquo;, which is being readied for Conference on Information and Knowledge Management (CIKM 2006). It relies heavily on <a href="http://common-lisp.net/project/s-xml/">s-xml</a>, <a href="http://common-lisp.net/project/cl-prevalence/">cl-prevelance</a> and<a href="http://common-lisp.net/project/cells/"> cells</a>. </p>
+ <p class="text">This will be of general interest since it will allow anyone using RDF/OWL to &quot;annotate&quot; their websites to use these macros to parse and generate their ontological relationships faster. Parsing and creating these relationships will be even more advantageous given Lisp's ability to manage large amounts of similar relationship atoms together in a structure that can persisted on the back end without any framework code. This projects seeks to try to tackle this problem from the functional perspective and build small light-weight parsing algorithms that can build on top of each other to establish relationships instead of the brute-force parsing now done in a top-down fashion using C++, C# and Java.</p>
+ <h3>It Will Be Free Forever</h3>
+ <p class="text">Also, it must always remain open source in license and deed as it seems a lot of the tools out there are locked down (binaries are free, code itself is not). This is understandable since the algorithms used for reasoning systems, if it works well, will make someone a lot of money some day. So what? The only way the idea of a relational system can be perfected is if everyone is on the same page and applying their expertise. </p>
+ <h3>MOST IMPORTANT: KEEP IT SIMPLE!</h3>
+ <p class="text">The language model we will create will hopefully generate OWL/RDF, SWRL and provide a way to manage and find relationships through consuming these resources in a reasoning system, but this must be within one engine and simple to use from the developer perspective. Our primary goal is to fold in and simplify as well as innovate. </p>
+ <h3>Join Us!</h3>
+ <p class="text">We'd love to get other people interested in the processing aspect of semantic relationships involved in our project! Just fork. </p>
+ <h2>How to Install What You Need To Get Working (It's Not That Hard, Really)</h2>
+ <h3>To Hang Out With Us You Will Need</h3>
+ <p class="text">1) Download Protege 3.1.1 (build 216) from Stanford University (<a href="http://protege.stanford.edu/download/release/full/">link</a>) <br />
+   2) Download the OWL-QL toolkit (<a href="http://projects.semwebcentral.org/projects/owl-ql/">link</a>) <br />
+   3) Read a little bit about <a href="http://www.daml.org/2003/11/swrl/">SWRL</a>. <br />
+   4) Download a Common Lisp distribution (<a href="http://www.franz.com/">Allegro</a> or <a href="http://sbcl.sourceforge.net">SBCL</a> are talked about on this page)</p>
+ <h3>You will also need to download the following Lisp packages:</h3>
+ <p class="text">1) Download Wilbur Semantic Web Toolkit for CLOS (<a href="http://wilbur-rdf.sourceforge.net/">link</a>) <br />
+   2) Download Cells 2.0, A dataflow extension to CLOS (<a href="http://common-lisp.net/project/cells/">link</a>)<br />
+   3) Download 
+   S-XML, a simple XML parser implemented in Common Lisp (<a href="http://common-lisp.net/project/s-xml/">link</a>)<br />
+   4) Download 
+   LTK, a Common Lisp binding for the Tk graphics toolkit (<a href="http://www.peter-herth.de/ltk/">link</a></p>
+   
+<h2>Authors</h2>
+<p>Brandon Werner (brandwe@live.com)
+<br/>
+<br/>      </p>
+<h2>Contact</h2>
+<p>Brandon Werner (brandwe@live.com)
+<br/>      </p>
+
+
+    <h2>Download</h2>
+    <p>
+      You can download this project in either
+      <a href="http://github.com/brandwe/cl-semantic/zipball/master">zip</a> or
+      <a href="http://github.com/brandwe/cl-semantic/tarball/master">tar</a> formats.
+    </p>
+    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
+      by running:
+      <pre>$ git clone git://github.com/brandwe/cl-semantic</pre>
+    </p>
+
+    <div class="footer">
+      get the source code on GitHub : <a href="http://github.com/brandwe/cl-semantic">brandwe/cl-semantic</a>
+    </div>
+
+  </div>
+
+  
+</body>
+</html>
+
