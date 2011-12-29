@@ -1,4 +1,4 @@
-Research Objective
+ Research Objective
 
 Seeks to create a collection of macros for extracting and generating relationships between information using ontologies for the Semantic Web, which will leverage DSpace, use Protege as the relationship mapper for OWL generation and be tested using MIT's Piggy Bank extraction project. This is research using Lisp to develop macros for generating and processing semantic data and programmatically manipulating and generating OWL, similar (or dead on) Racer System's RacerMaster, which is RacerPro as an object code library. It is also hoped that this project will apply speed paths based off of research from Eugene Agichtein & Silviu Cucerzan regarding predicting performance of relational extraction tasks (RE). This project seeks to re-create some of the work done with RacerPro, however the focus of this project will be on developing a language model for Reasoning Systems to allow for an open-source and vibrant community of developers to continue the work of improving reasoning systems to drive the Semantic Web.
 
